@@ -1,0 +1,32 @@
+.profile-info__button {
+    background-color: black;
+    display: inline-block;
+    background-image: url(../../../images/Vector.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 10px 10px;
+    position: absolute;
+}
+
+.profile-info__button:hover {
+    opacity: .7;
+}
+
+@media screen and (min-width: 768px) {
+    .profile-info__button {
+        margin-left: 312px;
+        margin-top: 36px;
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .profile-info__button {
+        left: 225px;
+        width: 18px;
+        height: 18px;
+        margin-left: 8px;
+    }
+}

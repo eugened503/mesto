@@ -1,0 +1,55 @@
+.popup__btn {
+    background-color: black;
+    color: white;
+    padding: 13px auto 18px auto;
+    border: none;
+    cursor: pointer;
+    width: 358px;
+    margin: 48px 36px 36px 36px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    height: 50px;
+}
+
+.popup__btn:hover {
+    opacity: .7;
+}
+
+@media screen and (min-width: 366px)and (max-width: 635px) {
+    .popup__btn {
+        background-color: black;
+        color: white;
+        padding: 13px auto 18px auto;
+        border: none;
+        cursor: pointer;
+        width: 210px;
+        margin: 48px 36px 36px 36px;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 22px;
+        text-align: center;
+        height: 50px;
+    }
+}
+
+@media screen and (max-width: 365px) {
+    .popup__btn {
+        background-color: black;
+        color: white;
+        padding: 13px auto 18px auto;
+        border: none;
+        cursor: pointer;
+        width: 183px;
+        margin: 48px 36px 36px 36px;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 22px;
+        text-align: center;
+        height: 50px;
+    }
+}
