@@ -12,10 +12,13 @@
     line-height: 22px;
     text-align: center;
     height: 50px;
+    border-radius: 2px;
 }
 
 .popup__btn:hover {
-    opacity: .7;
+    background-color: #313131;
+    cursor: pointer;
+    transition: background-color .5s;
 }
 
 @media screen and (min-width: 366px)and (max-width: 635px) {

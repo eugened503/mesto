@@ -1,40 +1,39 @@
-let profile = document.querySelector('.profile-info__title');
-let subtitle = document.querySelector('.profile-info__subtitle');
+const openBtn = document.querySelector('.profile-info__button'); /*присвоение переменной элемента - кнопки редактирования формы*/
+const closeBtn = document.querySelector('.popup__close-button'); /*присвоение переменной элемента - кнопки закрытия формы*/
+const saveBtn = document.querySelector('.popup__btn'); /*присвоение переменной элемента - кнопки сохранения изменений формы*/
+const formElement = document.querySelector('.popup'); /*присвоение переменной элемента - формы*/
+const infoTitle = document.querySelector('.profile-info__title'); /*присвоение переменной элемента - "имя пользователя"*/
+const infoSubtitle = document.querySelector('.profile-info__subtitle'); /*присвоение переменной элемента - "род деятельности пользователя"*/
 
-let input = document.querySelector("input");
-input.focus();
-input.selectionStart = input.value.length;
+openBtn.addEventListener('click', double); /*вызов функции открытия и закрытия формы*/
+closeBtn.addEventListener('click', double);
 
-function openForm() {
-    document.getElementById("myForm").style.display = "block";
+function double() { /*функция открытия и закрытия формы*/
+    if (formElement.classList.contains('popup_opened')) {
+        document.querySelector('.popup').classList.remove('popup_opened'); /*закрытие формы*/
+
+        function clean() { /*функция сброса несохраненных данных формы*/
+            document.querySelector('.popup__text_text-margin').value = "Жак-Ив Кусто";
+            document.querySelector('.popup__text_work-margin').value = "Исследователь океана";
+        }
+        clean();
+    } else {
+        document.querySelector('.popup').classList.add('popup_opened'); /*открытие формы*/
+    }
+}
+saveBtn.addEventListener("click", function() { /*функция сохранения данных формы*/
+    document.querySelector('.popup').classList.remove('popup_opened');
+
+});
+
+function formSubmitHandler(evt) { /*функция отправки данных формы*/
+    evt.preventDefault();
+
+    const nameInput = document.querySelector('.popup__text_text-margin').value; /*значение полей из свойства value*/
+    const jobInput = document.querySelector('.popup__text_work-margin').value;
+
+    infoTitle.textContent = nameInput; /*вставляем новые значения с помощью textContent*/
+    infoSubtitle.textContent = jobInput;
 }
 
-function closeForm() {
-    document.getElementById("myForm").style.display = "none";
-}
-
-// Находим форму в DOM
-let formElement = document.querySelector('.popup');
-
-// Обработчик «отправки» формы, хотя пока
-// она никуда отправляться не будет
-function formSubmitHandler(evt) {
-    evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-    // Так мы можем определить свою логику отправки.
-    // О том, как это делать, расскажем позже.
-    // Находим поля формы в DOM
-
-    let nameInput = document.getElementById("name").value;
-    let jobInput = document.getElementById("work").value;
-
-    // Получите значение полей из свойства value
-    // Выберите элементы, куда должны быть вставлены значения полей
-    // Вставьте новые значения с помощью textContent
-    document.querySelector('.profile-info__title').textContent = nameInput;
-    document.querySelector('.profile-info__subtitle').textContent = jobInput;
-    closeForm();
-}
-
-// Прикрепляем обработчик к форме:
-// он будет следить за событием “submit” - «отправка»
 formElement.addEventListener('submit', formSubmitHandler);
