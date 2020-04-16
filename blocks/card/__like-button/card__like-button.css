@@ -13,4 +13,7 @@
     justify-self: end;
     align-self: center;
     margin-right: 18px;
+    cursor: pointer;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }

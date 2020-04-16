@@ -1,5 +1,5 @@
     .popup__close-button {
-        background-color: rgba(161, 21, 207, 0);
+        background-color: transparent;
         display: inline-block;
         background-image: url(../../../images/CloseIcon.svg);
         background-size: cover;
@@ -7,13 +7,13 @@
         background-position: center;
         position: absolute;
         border: none;
+        cursor: pointer;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
     }
     
     .popup__close-button:hover {
-        background-color: rgba(240, 13, 145, 0);
         opacity: .6;
-        cursor: pointer;
-        transition: .2s;
     }
     
     @media screen and (min-width: 636px) {
