@@ -1,0 +1,7 @@
+.popup__imgEnlargement {
+    width: 100%;
+    max-height: 75vh;
+    background-size: cover;
+    position: relative;
+    
+}
