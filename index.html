@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mesto</title>
     <link rel="stylesheet" href="./pages/index.css">
 </head>
-
 <body class="body body_margin">
     <div class="page">
         <header class="header">
-            <img src="./images/logo.svg" alt="логотип Место-Россия" class="header__logo" />
+            <img src="./images/logo.svg" alt="логотип Место-Россия" class="header__logo"/>
         </header>
         <main class="content">
             <section class="profile">
@@ -21,65 +19,49 @@
                         <h1 class="profile-info__title">Жак-Ив Кусто</h1>
                         <p class="profile-info__subtitle">Исследователь океана</p>
                     </div>
-                    <button type="button" class="profile-info__button" aria-label="edit profile"></button>
+                    <button type="button" class="profile-info__button" aria-label="редактировать профиль"></button>
                 </div>
-                <button type="button" class="profile__add-button" aria-label="add photo"></button>
+                <button type="button" class="profile__add-button" aria-label="добавить фото"></button>
             </section>
-            <section class="cards">
-
+            <section class="cards"></section>
+            <template id="card">
                 <div class="card">
-                    <img src="./images/kirill-pershin-1088404-unsplash.jpg " class="card__image" alt="Изображение храма в Карачаевске">
-                    <h2 class="card__title">Карачаевск</h2>
-                    <button type="button" class="card__like-button" aria-label="like"></button>
+                    <img class="card__image" alt="ваше фото" id="myImg">
+                    <h2 class="card__title"></h2>
+                    <button type="button" class="card__trash-button" aria-label="корзина"></button>
+                    <button type="button" class="card__like-button" aria-label="лайк"></button>
                 </div>
-
-                <div class="card">
-                    <img src="./images/kirill-pershin-1404681-unsplash.jpg" class="card__image" alt="Изображение горы Эльбрус">
-                    <h2 class="card__title">Гора Эльбрус</h2>
-                    <button type="button" class="card__like-button" aria-label="like"></button>
-                </div>
-
-                <div class="card">
-                    <img src="./images/kirill-pershin-1556355-unsplash.jpg" class="card__image" alt="Изображение гор Домбая">
-                    <h2 class="card__title">Домбай</h2>
-                    <button type="button" class="card__like-button" aria-label="like"></button>
-                </div>
-
-                <div class="card">
-                    <img src="./images/s1200.jpg" class="card__image" alt="Изображение вулкана">
-                    <h2 class="card__title">Камчатка</h2>
-                    <button type="button" class="card__like-button" aria-label="like"></button>
-                </div>
-
-                <div class="card">
-                    <img src="./images/l17TahZrZ2c.jpg " class="card__image" alt="Изображение Онежского озера">
-                    <h2 class="card__title">Карелия</h2>
-                    <button type="button" class="card__like-button" aria-label="like"></button>
-                </div>
-
-                <div class="card">
-                    <img src="./images/altai.jpg " class="card__image" alt="Изображение Алтайских гор">
-                    <h2 class="card__title">Алтай</h2>
-                    <button type="button" class="card__like-button" aria-label="like"></button>
-                    <button type="button" class="card__like-button" aria-label="like"></button>
-                </div>
-            </section>
+            </template>
             <section class="popup">
                 <form class="popup__container" name="container" method="post" action="#">
                     <h2 class="popup__title">Редактировать профиль</h2>
                     <input type="text" placeholder="Ваше имя" required value="Жак-Ив Кусто" name="name" class="popup__text popup__text_text-margin">
-                    <input type="text" placeholder="Род деятельности" required value="Исследователь океана" name="work " class="popup__text popup__text_work-margin">
-                    <button type="submit" class="popup__btn" aria-label="save">Сохранить</button>
-                    <button type="reset" class="popup__close-button" aria-label="close"></button>
+                    <input type="text" placeholder="Род деятельности" required value="Исследователь океана" name="work" class="popup__text popup__text_work-margin">
+                    <button type="submit" class="popup__btn" aria-label="сохранить">Сохранить</button>
+                    <button type="reset" class="popup__close-button" aria-label="закрыть"></button>
+                </form>
+            </section>
+            <section class="popup popupFoto">
+                <form class="popup__container popup__containerFoto" name="container" method="post" action="#">
+                    <h2 class="popup__title popup__titleFoto">Новое место</h2>
+                    <input type="text" placeholder="Название" required value="" name="name" class="popup__text popup__text_text-margin popup__name">
+                    <input type="text" placeholder="Ссылка на картинку" required value="" name="work" class="popup__text popup__text_work-margin popup__link">
+                    <button type="submit" class="popup__btn popup__btnFoto" aria-label="сохранить">Создать</button>
+                    <button type="reset" class="popup__close-button popup__close-buttonFoto" aria-label="закрыть"></button>
+                </form>
+            </section>
+            <section class="popup popupEnlargement">
+                <form class="popup__containerEnlargement" name="container" method="post" action="#">
+                    <img src="" alt="ваше фото" class="popup__imgEnlargement"/>
+                    <h2 class="popup__title popup__titleEnlargement"></h2>
+                    <button type="reset" class="popup__close-button popup__close-buttonEnlargement" aria-label="закрыть"></button>
                 </form>
             </section>
         </main>
         <footer class="footer">
             <p class="footer__copyright">&#169; 2020 Mesto Russia</p>
         </footer>
-
     </div>
     <script src="./pages/script.js"></script>
 </body>
-
 </html>

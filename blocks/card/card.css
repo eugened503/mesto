@@ -1,5 +1,6 @@
     @import url('./__image/card__image.css');
     @import url('./__like-button/card__like-button.css');
+    @import url('./__trash-button/card__trash-button.css');
     @import url('./__title/card__title.css');
     .card {
         width: 100%;
@@ -13,3 +14,5 @@
         grid-template-columns: auto 1fr;
         grid-template-rows: 282px 79px;
     }
+
+    

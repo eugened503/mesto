@@ -19,7 +19,7 @@
 
 @media screen and (max-width: 365px) {
     .popup__container {
-        max-width: 255px;
-        height: 382px;
+        max-width: 240px;
+        height: 258px;
     }
 }
