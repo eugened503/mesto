@@ -10,26 +10,29 @@ const saveBtn = document.querySelector('.popup__btn'); // присвоение �
 const nameInput = document.querySelector('.popup__text_text-margin'); //присвоение переменной элемента - "поле ввода имени пользователя"
 const jobInput = document.querySelector('.popup__text_work-margin'); //присвоение переменной элемента - "поле ввода рода деятельности пользователя"
 
-function openPopup() { //функция открытия формы
-    formElement.classList.add('popup_opened');
-    nameInput.value = infoTitle.textContent;
-    jobInput.value = infoSubtitle.textContent;
-};
 
-function closePopup() { // функция закрытия формы
-    formElement.classList.remove('popup_opened')
-};
+function double() { // функция открытия и закрытия формы
+    formElement.classList.toggle('popup_opened');
+    
+    if (formElement.classList.contains('popup_opened')) {
+        nameInput.value = infoTitle.textContent;
+        jobInput.value = infoSubtitle.textContent;
+     } else {
+        infoTitle.value = nameInput.textContent;
+        infoSubtitle.value = jobInput.textContent;
+    }
+}
 
-function formSubmitHandler(evt) { // функция отправки формы
+function submitForm(evt) { // функция отправки формы
     evt.preventDefault();
 
     infoTitle.textContent = nameInput.value;
     infoSubtitle.textContent = jobInput.value;
-    closePopup();
+    double();
 }
-closeBtn.addEventListener('click', closePopup); // слушатель события кнопки закрытия формы
-openBtn.addEventListener('click', openPopup); // слушатель события кнопки открытия формы
-saveBtn.addEventListener('click', formSubmitHandler); //слушатель события кнопки отправки формы
+closeBtn.addEventListener('click', double); // слушатель события кнопки закрытия формы
+openBtn.addEventListener('click', double); // слушатель события кнопки открытия формы
+saveBtn.addEventListener('click', submitForm); //слушатель события кнопки отправки формы
 
 const initialCards = [
     {
@@ -58,14 +61,14 @@ const initialCards = [
     }
 ];
 
-function addСards(a, b) { //функция добавления карточки
+function addСards(name, link) { //функция добавления карточки
 
     const cardTemplate = document.querySelector('#card').content;
-    const cardsOnline = document.querySelector('.cards');
+    const createCard = document.querySelector('.cards');
     const cardElement = cardTemplate.cloneNode(true);
     
-    cardElement.querySelector('.card__title').textContent = a;
-    cardElement.querySelector('.card__image').src = b;
+    cardElement.querySelector('.card__title').textContent = name;
+    cardElement.querySelector('.card__image').src = link;
 
     cardElement.querySelector('.card__like-button').addEventListener('click', function (evt) {
         evt.target.classList.toggle('card__like-button_active');
@@ -76,31 +79,37 @@ function addСards(a, b) { //функция добавления карточк�
         evt.target.parentElement.remove();
       }); //удаление карточки по клику
 
-      cardElement.querySelector('.card__image').addEventListener('click', function (evt) {
-       
-        openPopupEnlargement(a, b); //по клику передаем изображение и название карточки в попап для просмотра фотографий в увеличенном режиме
+
+    cardElement.querySelector('.card__image').addEventListener('click', function () {
+    sendData(); //по клику передаем изображение и название карточки в попап для просмотра фотографий в увеличенном режиме
       }); 
 
-    cardsOnline.prepend(cardElement);
+    const sendData = () => {
+    openPopupEnlargement(name, link);
+    };
+    
+    const newCard = () => {
+        createCard.prepend(cardElement);
+    };
 
+    newCard();
+   
 }
 
 for (let i = 0; i < initialCards.length; i++) { // добавляем карточки из массива
     addСards(initialCards[i].name, initialCards[i].link);
 }
 
+
 /*Всплывающее окно для добавления ссылки и названия фотографии*/ 
 
-const formElementFoto = document.querySelector('.popupFoto'); // форма (попап) добавления карточки
+const formElementFoto = document.querySelector('.popup-foto'); // форма (попап) добавления карточки
 const openBtnAdd = document.querySelector('.profile__add-button'); // кнопка вызова формы 
-const saveBtnFoto = document.querySelector('.popup__btnFoto'); // кнопка отправки формы
-const closeBtnFoto = document.querySelector('.popup__close-buttonFoto'); //кнопка закрытия формы
+const saveBtnFoto = document.querySelector('.popup__btn-foto'); // кнопка отправки формы
+const closeBtnFoto = document.querySelector('.popup__close-button-foto'); //кнопка закрытия формы
 
 const nameInputFoto = document.querySelector('.popup__name'); // название фотографии в попапе
 const linkInputFoto = document.querySelector('.popup__link'); // ссылка на фотографию в попапе
-
-const cardTitle = document.querySelector('.card__title'); // название фотографии в карточке
-const cardImage = document.querySelector('.card__image'); // фотография в карточке
 
 function openPopupFoto() { //функция открытия попапа по добавлению названия фотографии и ссылки
     formElementFoto.classList.add('popup_opened');
@@ -116,13 +125,7 @@ function closePopupFoto() { //функция закрытия попапа
 function formSubmitHandlerFoto(evt) { // функция отправки данных формы
     evt.preventDefault();
     addСards(nameInputFoto.value, linkInputFoto.value); //передаем данные в карточку
-    DelLastCards();
     closePopupFoto();
-}
-
-function DelLastCards() { //функция удаления последней карточки
-    let description = document.querySelector('.cards');
-    description.removeChild(description.lastElementChild);
 }
 
 openBtnAdd.addEventListener('click', openPopupFoto); //слушатель события  кнопки открытия формы
@@ -132,15 +135,15 @@ saveBtnFoto.addEventListener('click', formSubmitHandlerFoto); //слушател
 
 /*Всплывающее окно для просмотра фотографий в увеличенном режиме*/ 
 
-const popupEnlargement = document.querySelector('.popupEnlargement'); //форма (попап) просмотра карточки в увеличенном режиме
-const closeBtnEnlargement = document.querySelector('.popup__close-buttonEnlargement'); //кнопка закрытия формы
-const modalImg = document.querySelector('.popup__imgEnlargement'); // фото в попапе
-const captionText = document.querySelector('.popup__titleEnlargement'); //текст в попапе
+const popupEnlargement = document.querySelector('.popup-enlargement'); //форма (попап) просмотра карточки в увеличенном режиме
+const closeBtnEnlargement = document.querySelector('.popup__close-button-enlargement'); //кнопка закрытия формы
+const modalImg = document.querySelector('.popup__img-enlargement'); // фото в попапе
+const captionText = document.querySelector('.popup__title-enlargement'); //текст в попапе
 
-function openPopupEnlargement(x, y) { 
+ function openPopupEnlargement(title, link) { 
     popupEnlargement.classList.add('popup_opened');
-    captionText.textContent = x; //передаем название карточки в попап
-    modalImg.src = y; //передаем фото карточки в попап
+    captionText.textContent = title; //передаем название карточки в попап
+    modalImg.src = link; //передаем фото карточки в попап
 };
 
 function closePopupEnlargement() { //функция закрытия попапа

@@ -1,5 +1,5 @@
  @media screen and (min-width: 636px) {
-    .popup__close-buttonEnlargement {
+    .popup__close-button-enlargement {
         width: 45px;
         height: 45px;
         top: -40px;
@@ -9,7 +9,7 @@
 }
 
 @media screen and (min-width: 366px)and (max-width: 635px) {
-    .popup__close-buttonEnlargement {
+    .popup__close-button-enlargement {
         width: 40px;
         height: 40px;
         top: -40px;
@@ -18,7 +18,7 @@
 }
 
 @media screen and (max-width: 365px) {
-    .popup__close-button {
+    .popup__close-button-enlargement {
         width: 40px;
         height: 40px;
         top: -35px;
