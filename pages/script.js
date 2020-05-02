@@ -1,51 +1,32 @@
-/*Всплывающее окно для редактирования профиля пользователя*/ 
-const openBtn = document.querySelector('.profile-info__button'); //присвоение переменной элемента - кнопки редактирования формы
-const closeBtn = document.querySelector('.popup__close-button'); // присвоение переменной элемента - кнопки закрытия формы 
-const formElement = document.querySelector('.popup'); //присвоение переменной элемента - формы
-const infoTitle = document.querySelector('.profile-info__title'); //присвоение переменной элемента - "имя пользователя"
+
+const openBtn = document.querySelector('.profile-info__button'); //присвоение переменной элемента - кнопки редактирования формы (профиль пользователя)
+const closeBtn = document.querySelector('.popup__close-button'); // присвоение переменной элемента - кнопки закрытия формы (профиль пользователя)
+const formProfileElement = document.querySelector('.popup'); //присвоение переменной элемента - формы (профиль пользователя)
+const infoTitle = document.querySelector('.profile-info__title'); //присвоение переменной элемента - "имя пользователя" (профиль пользователя)
 const infoSubtitle = document.querySelector('.profile-info__subtitle'); //присвоение переменной элемента - "род деятельности пользователя"
-const saveBtn = document.querySelector('.popup__btn'); // присвоение переменной элемента - кнопки сохранения формы 
+const saveBtn = document.querySelector('.popup__btn'); // присвоение переменной элемента - кнопки сохранения формы (профиль пользователя)
 const nameInput = document.querySelector('.popup__text_text-margin'); //присвоение переменной элемента - "поле ввода имени пользователя"
 const jobInput = document.querySelector('.popup__text_work-margin'); //присвоение переменной элемента - "поле ввода рода деятельности пользователя"
-
-function togglePopup(modalWindow) { // общая функция открытия и закрытия формы
-    modalWindow.classList.toggle('popup_opened');
-}
-
-function callForm() { //функция вызова формы
-    togglePopup(formElement);
-    completeForm();
-}
-
-function completeForm() { // функция заполнения формы
-if (formElement.classList.contains('popup_opened')) {
-    nameInput.value = infoTitle.textContent;
-    jobInput.value = infoSubtitle.textContent;
- } else {
-    infoTitle.value = nameInput.textContent;
-    infoSubtitle.value = jobInput.textContent;
-}
-}
-
-function submitForm(evt) { // функция отправки формы
-    evt.preventDefault();
-    infoTitle.textContent = nameInput.value;
-    infoSubtitle.textContent = jobInput.value;
-    callForm();
-}
-
-closeBtn.addEventListener('click',callForm); // слушатель события кнопки закрытия формы
-openBtn.addEventListener('click', callForm); // слушатель события кнопки открытия формы
-saveBtn.addEventListener('click', submitForm); //слушатель события кнопки отправки формы
-
+const popupEnlargement = document.querySelector('.popup-enlargement'); //поп-ап просмотра карточки (увеличенный вид)
+const closeBtnEnlargement = document.querySelector('.popup__close-button-enlargement'); //кнопка закрытия поп-апа (увеличенный вид)
+const modalImg = document.querySelector('.popup__img-enlargement'); // фотография в поп-апе (увеличенный вид)
+const captionText = document.querySelector('.popup__title-enlargement'); //текст в поп-апе (увеличенный вид)
+const cardsContainer = document.querySelector('.cards'); // контейнер для карточек
+const cardTemplate = document.querySelector('#card').content; 
+const formElementFoto = document.querySelector('.popup-foto'); // поп-ап для добавления карточки
+const openBtnAdd = document.querySelector('.profile__add-button'); // кнопка вызова поп-апа (добавление карточки)
+const saveBtnFoto = document.querySelector('.popup__btn-foto'); // кнопка отправки  поп-апа (добавление карточки)
+const closeBtnFoto = document.querySelector('.popup__close-button-foto'); //кнопка закрытия  поп-апа (добавление карточки)
+const nameInputFoto = document.querySelector('.popup__name'); // название фотографии в поп-апе (добавление карточки)
+const linkInputFoto = document.querySelector('.popup__link'); // ссылка на фотографию в поп-апе (добавление карточки)
 const initialCards = [
     {
         name: 'Магадан',
         link: 'https://images.unsplash.com/photo-1570340831042-040b3999690c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1352&q=80'
     },
     {
-        name: 'Абакан',
-        link: 'https://images.unsplash.com/photo-1584314484329-dedfde6f6392?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1482&q=80'
+        name: 'Екатеринбург',
+        link: 'https://images.unsplash.com/photo-1521398650514-170f902bb376?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80'
     },
     {
         name: 'Вологодская область',
@@ -65,21 +46,36 @@ const initialCards = [
     }
 ];
 
-function openPopupEnlargement(evt) { //функция открытия попапа с фотографией в увеличенном виде
-    const item = evt.target;
-    togglePopup(popupEnlargement);
-    captionText.textContent = item.name; //передаем название карточки в попап
-    modalImg.src =  item.src; //передаем фото карточки в попап
-};
+function togglePopup(modalWindow) { // общая функция открытия и закрытия формы
+    modalWindow.classList.toggle('popup_opened');
+}
 
-const cardsContainer = document.querySelector('.cards'); 
-const cardTemplate = document.querySelector('#card').content;
+function openProfileForm(evt) { //открываем форму редактирования профиля пользователя
+    evt.preventDefault();
+    // Заполнение полей формы
+    nameInput.value = infoTitle.textContent;
+    jobInput.value = infoSubtitle.textContent;
+    // Открытие модального окна
+    togglePopup(formProfileElement);
+}
+
+function submitForm(evt) { // функция отправки формы редактирования профиля пользователя
+    evt.preventDefault();
+    infoTitle.textContent = nameInput.value;
+    infoSubtitle.textContent = jobInput.value;
+    togglePopup(formProfileElement);
+}
+
+function openPopupEnlargement(title, picture) { //функция открытия поп-апа с фотографией в увеличенном виде
+   captionText.textContent =  title; //передаем название карточки в поп-ап (увеличенный вид)
+   modalImg.src = picture; //передаем фото карточки в поп-ап (увеличенный вид)
+   togglePopup(popupEnlargement);
+};
 
 function createСard(name, link) { //функция добавления карточки
     const cardElement = cardTemplate.cloneNode(true);
-    const cardElementTitle = cardElement.querySelector('.card__title');
-    const cardElementImage =  cardElement.querySelector('.card__image');
-
+    const cardElementTitle = cardElement.querySelector('.card__title'); //название фотографии в карточке
+    const cardElementImage =  cardElement.querySelector('.card__image'); //фотография в карточке
     cardElementTitle.textContent = name;
     cardElementImage.src = link;
 
@@ -91,8 +87,10 @@ function createСard(name, link) { //функция добавления кар�
         evt.target.closest('.card').remove();
       }); //удаление карточки по клику
 
-    cardElementImage.addEventListener('click',  openPopupEnlargement); //вызов функции просмотра фотографии в увеличенном виде
-       
+    cardElementImage.addEventListener('click', () => { //вызов по клику функции просмотра фотографии в увеличенном виде 
+        openPopupEnlargement(name, link)}
+    ); 
+    
     return cardElement;
 }
 
@@ -101,43 +99,23 @@ for (let i = 0; i < initialCards.length; i++) { //добавление карт�
     cardsContainer.prepend(card);
   }
 
-/*Всплывающее окно для добавления ссылки и названия фотографии*/ 
-const formElementFoto = document.querySelector('.popup-foto'); // форма (попап) добавления карточки
-const openBtnAdd = document.querySelector('.profile__add-button'); // кнопка вызова формы 
-const saveBtnFoto = document.querySelector('.popup__btn-foto'); // кнопка отправки формы
-const closeBtnFoto = document.querySelector('.popup__close-button-foto'); //кнопка закрытия формы
-
-const nameInputFoto = document.querySelector('.popup__name'); // название фотографии в попапе
-const linkInputFoto = document.querySelector('.popup__link'); // ссылка на фотографию в попапе
-
-function openPopupFoto() { //функция открытия попапа по добавлению названия фотографии и ссылки
-    togglePopup(formElementFoto);
+function openPopupFoto() { //функция открытия поп-апа по добавлению названия фотографии и ссылки
     nameInputFoto.value = '';
     linkInputFoto.value = '';
-};
-
-function closePopupFoto() { //функция закрытия попапа
     togglePopup(formElementFoto);
 };
 
-function formSubmitHandlerFoto(evt) { // функция отправки данных формы
+function formSubmitHandlerFoto(evt) { // функция отправки данных формы (добавление карточки)
     evt.preventDefault();
     cardsContainer.prepend(createСard(nameInputFoto.value, linkInputFoto.value)); //передаем данные в карточку
-    closePopupFoto();
+    togglePopup(formElementFoto);
 }
 
-openBtnAdd.addEventListener('click', openPopupFoto); //слушатель события  кнопки открытия формы
-closeBtnFoto.addEventListener('click', closePopupFoto); //слушатель события  кнопки закрытия формы
-saveBtnFoto.addEventListener('click', formSubmitHandlerFoto); //слушатель события  кнопки отправки формы
+openBtn.addEventListener('click', openProfileForm); // слушатель события кнопки закрытия формы редактирования профиля
+closeBtn.addEventListener('click', () => togglePopup(formProfileElement)); // слушатель события кнопки открытия формы редактирования профиля
+saveBtn.addEventListener('click', submitForm); //слушатель события кнопки отправки формы редактирования профиля
+openBtnAdd.addEventListener('click', openPopupFoto); //слушатель события  кнопки открытия формы (добавление карточки)
+closeBtnFoto.addEventListener('click', () => togglePopup(formElementFoto)); //слушатель события  кнопки закрытия формы (добавление карточки)
+saveBtnFoto.addEventListener('click', formSubmitHandlerFoto); //слушатель события  кнопки отправки формы (добавление карточки)
+closeBtnEnlargement.addEventListener('click', () => togglePopup(popupEnlargement)); //слушатель события  кнопки закрытия поп-апа (увеличенный вид)
 
-/*Всплывающее окно для просмотра фотографий в увеличенном виде*/ 
-const popupEnlargement = document.querySelector('.popup-enlargement'); //форма (попап) просмотра карточки в увеличенном виде
-const closeBtnEnlargement = document.querySelector('.popup__close-button-enlargement'); //кнопка закрытия формы
-const modalImg = document.querySelector('.popup__img-enlargement'); // фото в попапе
-const captionText = document.querySelector('.popup__title-enlargement'); //текст в попапе
-
-function closePopupEnlargement() { //функция закрытия попапа
-    togglePopup(popupEnlargement);
-};
-
-closeBtnEnlargement.addEventListener('click', closePopupEnlargement); //слушатель события  кнопки закрытия формы
