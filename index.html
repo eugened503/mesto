@@ -32,20 +32,24 @@
                     <button type="button" class="card__like-button" aria-label="лайк"></button>
                 </div>
             </template>
-            <section class="popup">
-                <form class="popup__container" name="container" method="post" action="#">
+            <section class="popup popup__overlay">
+                <form class="popup__container popup__form" name="container" method="post" action="#" novalidate>
                     <h2 class="popup__title">Редактировать профиль</h2>
-                    <input type="text" placeholder="Ваше имя" required value="Жак-Ив Кусто" name="name" class="popup__text popup__text_text-margin">
-                    <input type="text" placeholder="Род деятельности" required value="Исследователь океана" name="work" class="popup__text popup__text_work-margin">
-                    <button type="submit" class="popup__btn" aria-label="сохранить">Сохранить</button>
+                    <input id="name-input" type="text" required placeholder="Ваше имя" value="Жак-Ив Кусто" name="name" class="popup__text popup__text_text-margin popup__input" minlength="2" maxlength="40" pattern="[А-Яа-яA-Za-z -]{2,40}">
+                    <span id="name-input-error" class="popup__input-error"></span>
+                <input id="work-input" type="text" required placeholder="Род деятельности" value="Исследователь океана" name="work" class="popup__text popup__text_work-margin popup__input" minlength="2" maxlength="200">
+                <span id="work-input-error" class="popup__input-error"></span>
+                <button type="submit" class="popup__btn popup__button" aria-label="сохранить">Сохранить</button>
                     <button type="button" class="popup__close-button" aria-label="закрыть"></button>
                 </form>
             </section>
             <section class="popup popup-foto">
-                <form class="popup__container" name="container" method="post" action="#">
+                <form class="popup__container popup__form" name="container" method="post" action="#" novalidate>
                     <h2 class="popup__title">Новое место</h2>
-                    <input type="text" placeholder="Название" required value="" name="name" class="popup__text popup__text_text-margin popup__name">
-                    <input type="text" placeholder="Ссылка на картинку" required value="" name="work" class="popup__text popup__text_work-margin popup__link">
+                    <input type="text" id="title-input" placeholder="Название" required value="" name="title" class="popup__text popup__text_text-margin popup__name popup__input" minlength="1" maxlength="30">
+                    <span id="title-input-error" class="popup__input-error"></span>
+                    <input type="text" id="link-input" placeholder="Ссылка на картинку" required value="" name="link" class="popup__text popup__text_work-margin popup__link popup__input" pattern="^(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})[^\s@]*$"> 
+                    <span id="link-input-error" class="popup__input-error"></span>
                     <button type="submit" class="popup__btn popup__btn-foto" aria-label="сохранить">Создать</button>
                     <button type="button" class="popup__close-button popup__close-button-foto" aria-label="закрыть"></button>
                 </form>
@@ -63,5 +67,6 @@
         </footer>
     </div>
     <script src="./pages/script.js"></script>
+    <script src="./pages/validate.js"></script>
 </body>
 </html>

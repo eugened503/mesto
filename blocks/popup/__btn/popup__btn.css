@@ -1,3 +1,4 @@
+@import url('./_disabled/popup__btn_disabled.css');
 .popup__btn {
     background-color: black;
     color: white;
@@ -5,7 +6,7 @@
     border: none;
     cursor: pointer;
     width: 358px;
-    margin: 48px 36px 36px 36px;
+    margin: 45px 36px 0 36px;
     font-style: normal;
     font-weight: normal;
     font-size: 18px;
@@ -35,7 +36,7 @@
 
 @media screen and (max-width: 365px) {
     .popup__btn {
-        margin: 15px 20px auto 20px;
+        margin: 60px 20px auto 20px;
         font-size: 14px;
         line-height: 17px;
         text-align: center;

@@ -1,4 +1,4 @@
-@import url('./__btn.css/popup__btn.css');
+@import url('./__btn/popup__btn.css');
 @import url('./__close-button/popup__close-button.css');
 @import url('./__close-button-enlargement/popup__close-button-enlargement.css');
 @import url('./__container/popup__container.css');
@@ -7,6 +7,8 @@
 @import url('./__title/popup__title.css');
 @import url('./__title-enlargement/popup__title-enlargement.css');
 @import url('./__img-enlargement/popup__img-enlargement.css');
+@import url('./__error/popup__error.css');
+@import url('./__input/popup__input.css');
 
 .popup {
     width: 100%;
@@ -17,7 +19,6 @@
     right: 0;
     bottom: 0;
     z-index: 9990;
-    /*display: none;*/
     background: rgba(0, 0, 0, .7);
     opacity: 0;
     visibility: hidden;

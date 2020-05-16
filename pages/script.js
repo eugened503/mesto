@@ -19,6 +19,7 @@ const saveBtnFoto = document.querySelector('.popup__btn-foto'); // кнопка 
 const closeBtnFoto = document.querySelector('.popup__close-button-foto'); //кнопка закрытия  поп-апа (добавление карточки)
 const nameInputFoto = document.querySelector('.popup__name'); // название фотографии в поп-апе (добавление карточки)
 const linkInputFoto = document.querySelector('.popup__link'); // ссылка на фотографию в поп-апе (добавление карточки)
+const closeOverlayPro = document.querySelector('.popup__overlay'); // элемент оверлэй-закрытия формы "профиль пользователя"
 const initialCards = [
     {
         name: 'Магадан',
@@ -46,8 +47,40 @@ const initialCards = [
     }
 ];
 
-function togglePopup(modalWindow) { // общая функция открытия и закрытия формы
-    modalWindow.classList.toggle('popup_opened');
+// функция очищения полей с ошибками
+function clearError (field) {
+    const bugInput = Array.from(field.querySelectorAll('.popup__input')); //массив инпутов
+    const bugSpan = Array.from(field.querySelectorAll('span')); //массив спанов
+    const bugBtn = field.querySelector('.popup__btn'); //кнопка формы 
+    
+    bugSpan.forEach((span) => {
+        span.classList.remove('popup__error_visible'); // очищаем спан
+        span.textContent = '';
+    })
+    
+    bugInput.forEach((input) => {
+        input.classList.remove('popup__input_type_error'); // очищаем инпут от ошибок
+        if (input.validity.valid) { //проверяем инпут на валидность:
+            bugBtn.classList.remove('popup__btn_disabled'); //делаем кнопку неактивной
+          } else { 
+            bugBtn.classList.add('popup__btn_disabled'); // или делаем кнопку активной
+          }
+    });
+  }
+
+  function openAllpopap(modalWindow) { //функция открытия всех поп-апов
+    modalWindow.classList.add('popup_opened');
+    clearError(modalWindow);
+    document.addEventListener('keydown', function(event) { //закрытие клавишей esc
+        const key = event.key; 
+        if (key === "Escape") {
+            modalWindow.classList.remove('popup_opened');    
+        }
+    });
+}
+
+function closeAllpopap(modalWindow) { //функция закрытия всех поп-апов
+    modalWindow.classList.remove('popup_opened');
 }
 
 function openProfileForm(evt) { //открываем форму редактирования профиля пользователя
@@ -56,21 +89,23 @@ function openProfileForm(evt) { //открываем форму редактир
     nameInput.value = infoTitle.textContent;
     jobInput.value = infoSubtitle.textContent;
     // Открытие модального окна
-    togglePopup(formProfileElement);
+    openAllpopap(formProfileElement);
+    
 }
 
 function submitForm(evt) { // функция отправки формы редактирования профиля пользователя
     evt.preventDefault();
     infoTitle.textContent = nameInput.value;
     infoSubtitle.textContent = jobInput.value;
-    togglePopup(formProfileElement);
+    closeAllpopap(formProfileElement);
 }
 
 function openPopupEnlargement(title, picture) { //функция открытия поп-апа с фотографией в увеличенном виде
    captionText.textContent =  title; //передаем название карточки в поп-ап (увеличенный вид)
    modalImg.src = picture; //передаем фото карточки в поп-ап (увеличенный вид)
-   togglePopup(popupEnlargement);
-};
+   openAllpopap(popupEnlargement);
+  
+}
 
 function createСard(name, link) { //функция добавления карточки
     const cardElement = cardTemplate.cloneNode(true);
@@ -102,20 +137,27 @@ for (let i = 0; i < initialCards.length; i++) { //добавление карт�
 function openPopupFoto() { //функция открытия поп-апа по добавлению названия фотографии и ссылки
     nameInputFoto.value = '';
     linkInputFoto.value = '';
-    togglePopup(formElementFoto);
-};
+    openAllpopap(formElementFoto);
+  
+}
 
 function formSubmitHandlerFoto(evt) { // функция отправки данных формы (добавление карточки)
     evt.preventDefault();
     cardsContainer.prepend(createСard(nameInputFoto.value, linkInputFoto.value)); //передаем данные в карточку
-    togglePopup(formElementFoto);
+    closeAllpopap(formElementFoto);
 }
 
+function overlay(evt) { // функция "оверлэй"
+    evt.target.classList.remove('popup_opened');
+  }
+
 openBtn.addEventListener('click', openProfileForm); // слушатель события кнопки закрытия формы редактирования профиля
-closeBtn.addEventListener('click', () => togglePopup(formProfileElement)); // слушатель события кнопки открытия формы редактирования профиля
+closeBtn.addEventListener('click', () => closeAllpopap(formProfileElement)); // слушатель события кнопки открытия формы редактирования профиля
 saveBtn.addEventListener('click', submitForm); //слушатель события кнопки отправки формы редактирования профиля
 openBtnAdd.addEventListener('click', openPopupFoto); //слушатель события  кнопки открытия формы (добавление карточки)
-closeBtnFoto.addEventListener('click', () => togglePopup(formElementFoto)); //слушатель события  кнопки закрытия формы (добавление карточки)
+closeBtnFoto.addEventListener('click', () => closeAllpopap(formElementFoto)); //слушатель события  кнопки закрытия формы (добавление карточки)
 saveBtnFoto.addEventListener('click', formSubmitHandlerFoto); //слушатель события  кнопки отправки формы (добавление карточки)
-closeBtnEnlargement.addEventListener('click', () => togglePopup(popupEnlargement)); //слушатель события  кнопки закрытия поп-апа (увеличенный вид)
-
+closeBtnEnlargement.addEventListener('click', () => closeAllpopap(popupEnlargement)); //слушатель события  кнопки закрытия поп-апа (увеличенный вид)
+closeOverlayPro.addEventListener('click', overlay, false); // оверлэй для профиля
+formElementFoto.addEventListener('click', overlay, false); //оверлэй для карточки
+popupEnlargement.addEventListener('click', overlay, false); // оверлэй фотографии
