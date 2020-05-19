@@ -39,7 +39,7 @@
                     <span id="name-input-error" class="popup__input-error"></span>
                 <input id="work-input" type="text" required placeholder="Род деятельности" value="Исследователь океана" name="work" class="popup__text popup__text_work-margin popup__input" minlength="2" maxlength="200">
                 <span id="work-input-error" class="popup__input-error"></span>
-                <button type="submit" class="popup__btn popup__button" aria-label="сохранить">Сохранить</button>
+                <button type="submit" class="popup__btn popup__button" aria-label="сохранить" disabled id="active-passive-btn">Сохранить</button>
                     <button type="button" class="popup__close-button" aria-label="закрыть"></button>
                 </form>
             </section>
@@ -48,9 +48,9 @@
                     <h2 class="popup__title">Новое место</h2>
                     <input type="text" id="title-input" placeholder="Название" required value="" name="title" class="popup__text popup__text_text-margin popup__name popup__input" minlength="1" maxlength="30">
                     <span id="title-input-error" class="popup__input-error"></span>
-                    <input type="text" id="link-input" placeholder="Ссылка на картинку" required value="" name="link" class="popup__text popup__text_work-margin popup__link popup__input" pattern="^(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})[^\s@]*$"> 
+                    <input type="url" id="link-input" placeholder="Ссылка на картинку" required value="" name="link" class="popup__text popup__text_work-margin popup__link popup__input" pattern="^(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})[^\s@]*$"> 
                     <span id="link-input-error" class="popup__input-error"></span>
-                    <button type="submit" class="popup__btn popup__btn-foto" aria-label="сохранить">Создать</button>
+                    <button type="submit" class="popup__btn popup__btn-foto" aria-label="сохранить" disabled id="active-passive-btn">Создать</button>
                     <button type="button" class="popup__close-button popup__close-button-foto" aria-label="закрыть"></button>
                 </form>
             </section>

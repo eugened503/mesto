@@ -31,10 +31,13 @@ const toggleButtonState = (formObject, inputList, buttonElement) => {
   // Если есть хотя бы один невалидный инпут
   if (hasInvalidInput(inputList)) {
     // сделай кнопку неактивной
-    buttonElement.classList.add(formObject.inactiveButtonClass);  
+    buttonElement.classList.add(formObject.inactiveButtonClass);
+    buttonElement.disabled = true;
+    
   } else {
         // иначе сделай кнопку активной
     buttonElement.classList.remove(formObject.inactiveButtonClass);
+    buttonElement.disabled = false;
   }
 };
 

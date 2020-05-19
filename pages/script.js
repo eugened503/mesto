@@ -20,6 +20,8 @@ const closeBtnFoto = document.querySelector('.popup__close-button-foto'); //кн
 const nameInputFoto = document.querySelector('.popup__name'); // название фотографии в поп-апе (добавление карточки)
 const linkInputFoto = document.querySelector('.popup__link'); // ссылка на фотографию в поп-апе (добавление карточки)
 const closeOverlayPro = document.querySelector('.popup__overlay'); // элемент оверлэй-закрытия формы "профиль пользователя"
+const bugInput = Array.from(document.querySelectorAll('.popup__input')); //массив инпутов 
+const bugSpan = Array.from(document.querySelectorAll('.popup__input-error')); //массив спанов
 const initialCards = [
     {
         name: 'Магадан',
@@ -47,36 +49,38 @@ const initialCards = [
     }
 ];
 
-// функция очищения полей с ошибками
-function clearError (field) {
-    const bugInput = Array.from(field.querySelectorAll('.popup__input')); //массив инпутов
-    const bugSpan = Array.from(field.querySelectorAll('span')); //массив спанов
-    const bugBtn = field.querySelector('.popup__btn'); //кнопка формы 
-    
-    bugSpan.forEach((span) => {
+function makePassiveBtn(field){ // функция открытия неактивной кнопки
+    const bugBtn = field.querySelector('#active-passive-btn'); //кнопка формы 
+    bugBtn.classList.add('popup__btn_disabled'); //делаем кнопку неактивной
+    bugBtn.disabled = true;
+}
+
+function makeActiveBtn(field){ // функция открытия активной кнопки
+   const bugBtn = field.querySelector('#active-passive-btn'); //кнопка формы 
+   bugBtn.classList.remove('popup__btn_disabled'); //делаем кнопку активной
+   bugBtn.disabled = false;
+}
+
+function clearError () { // функция очищения полей с ошибками
+    bugSpan.forEach(span => {
         span.classList.remove('popup__error_visible'); // очищаем спан
         span.textContent = '';
     })
-    
-    bugInput.forEach((input) => {
-        input.classList.remove('popup__input_type_error'); // очищаем инпут от ошибок
-        if (input.validity.valid) { //проверяем инпут на валидность:
-            bugBtn.classList.remove('popup__btn_disabled'); //делаем кнопку неактивной
-          } else { 
-            bugBtn.classList.add('popup__btn_disabled'); // или делаем кнопку активной
-          }
-    });
+    bugInput.forEach(input => {
+       input.classList.remove('popup__input_type_error'); // убираем красное подчеркивание
+    })
   }
 
-  function openAllpopap(modalWindow) { //функция открытия всех поп-апов
+  function escape(event, modalWindow) { //функция закрытия поп-апов клавишей esc
+    const key = event.key; 
+    if (key === "Escape") {
+        modalWindow.classList.remove('popup_opened');    
+    }
+  }
+
+function openAllpopap(modalWindow) { //функция открытия всех поп-апов
     modalWindow.classList.add('popup_opened');
-    clearError(modalWindow);
-    document.addEventListener('keydown', function(event) { //закрытие клавишей esc
-        const key = event.key; 
-        if (key === "Escape") {
-            modalWindow.classList.remove('popup_opened');    
-        }
-    });
+    document.addEventListener('keydown', () => escape(event, modalWindow)),{onсe : true}; // закрываем клавишей esc
 }
 
 function closeAllpopap(modalWindow) { //функция закрытия всех поп-апов
@@ -85,12 +89,11 @@ function closeAllpopap(modalWindow) { //функция закрытия всех
 
 function openProfileForm(evt) { //открываем форму редактирования профиля пользователя
     evt.preventDefault();
-    // Заполнение полей формы
-    nameInput.value = infoTitle.textContent;
+    clearError(); //очищаем поля с ошибками
+    openAllpopap(formProfileElement); // открытие модального окна
+    nameInput.value = infoTitle.textContent;  // заполнение полей формы
     jobInput.value = infoSubtitle.textContent;
-    // Открытие модального окна
-    openAllpopap(formProfileElement);
-    
+    makeActiveBtn(formProfileElement); //делаем кнопку активной (по умолчанию, так как поля заполнены примерами)
 }
 
 function submitForm(evt) { // функция отправки формы редактирования профиля пользователя
@@ -100,51 +103,51 @@ function submitForm(evt) { // функция отправки формы ред�
     closeAllpopap(formProfileElement);
 }
 
-function openPopupEnlargement(title, picture) { //функция открытия поп-апа с фотографией в увеличенном виде
+function openPopupEnlargement(title, picture) {
+   openAllpopap(popupEnlargement);  //функция открытия поп-апа с фотографией в увеличенном виде
    captionText.textContent =  title; //передаем название карточки в поп-ап (увеличенный вид)
    modalImg.src = picture; //передаем фото карточки в поп-ап (увеличенный вид)
-   openAllpopap(popupEnlargement);
-  
+}
+
+function toggleLike(evt) {
+    evt.target.classList.toggle('card__like-button_active');
+  }; //измененеи цвета лайка по клику
+
+function deleteCard(evt) {
+    evt.target.closest('.card').remove(); //удаление карточки по клику
 }
 
 function createСard(name, link) { //функция добавления карточки
     const cardElement = cardTemplate.cloneNode(true);
     const cardElementTitle = cardElement.querySelector('.card__title'); //название фотографии в карточке
     const cardElementImage =  cardElement.querySelector('.card__image'); //фотография в карточке
+
     cardElementTitle.textContent = name;
     cardElementImage.src = link;
 
-    cardElement.querySelector('.card__like-button').addEventListener('click', function (evt) {
-        evt.target.classList.toggle('card__like-button_active');
-      }); //измененеи цвета лайка по клику
-    
-    cardElement.querySelector('.card__trash-button').addEventListener('click', function (evt) {
-        evt.target.closest('.card').remove();
-      }); //удаление карточки по клику
+    cardElement.querySelector('.card__like-button').addEventListener('click', toggleLike), {onсe : true}; //добавляем или убираем лайк
+    cardElement.querySelector('.card__trash-button').addEventListener('click', deleteCard), {onсe : true}; //удаляем карточку
 
-    cardElementImage.addEventListener('click', () => { //вызов по клику функции просмотра фотографии в увеличенном виде 
-        openPopupEnlargement(name, link)}
-    ); 
-    
+    cardElementImage.addEventListener('click', () => openPopupEnlargement(name, link)), {onсe : true}; //вызов по клику функции просмотра фотографии в увеличенном виде 
     return cardElement;
 }
 
-for (let i = 0; i < initialCards.length; i++) { //добавление карточек из массива с помощью цикла
-    const card = createСard(initialCards[i].name, initialCards[i].link);
-    cardsContainer.prepend(card);
-  }
+  function cycleAddingCard () { // добавляем карточки из массива
+    initialCards.forEach(({name, link}) => cardsContainer.prepend(createСard(name, link)));
+}  
 
 function openPopupFoto() { //функция открытия поп-апа по добавлению названия фотографии и ссылки
+    clearError(); //очищаем поля с ошибками
+    openAllpopap(formElementFoto); //открываем поп-ап
     nameInputFoto.value = '';
     linkInputFoto.value = '';
-    openAllpopap(formElementFoto);
-  
+    makePassiveBtn(formElementFoto); //делаем кнопку неактивной (по умолчанию, так как поля пусты)
 }
 
-function formSubmitHandlerFoto(evt) { // функция отправки данных формы (добавление карточки)
+function formSubmitHandlerFoto(evt) { // функция отправки данных формы (добавление карточки) 
     evt.preventDefault();
     cardsContainer.prepend(createСard(nameInputFoto.value, linkInputFoto.value)); //передаем данные в карточку
-    closeAllpopap(formElementFoto);
+    closeAllpopap(formElementFoto); //закрываем поп-ап
 }
 
 function overlay(evt) { // функция "оверлэй"
@@ -161,3 +164,4 @@ closeBtnEnlargement.addEventListener('click', () => closeAllpopap(popupEnlargeme
 closeOverlayPro.addEventListener('click', overlay, false); // оверлэй для профиля
 formElementFoto.addEventListener('click', overlay, false); //оверлэй для карточки
 popupEnlargement.addEventListener('click', overlay, false); // оверлэй фотографии
+cycleAddingCard ();
