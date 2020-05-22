@@ -13,6 +13,8 @@ const showInputError = (formObject, formElement, inputElement, errorMessage) => 
   inputElement.classList.add(formObject.inputErrorClass);
   errorElement.classList.add(formObject.errorClass);
   errorElement.textContent = errorMessage;
+  openBtn.addEventListener('click', () => hideInputError(formObject, formElement, inputElement)); //удаляем сообщение об ошибке и красное подчеркивание при открытии поп-апа профиля
+  openBtnAdd.addEventListener('click', () => hideInputError(formObject, formElement, inputElement)); //удаляем сообщение об ошибке и красное подчеркивание при открытии поп-апа карточки
 };
 
 const hasInvalidInput = (inputList) => {
@@ -33,12 +35,13 @@ const toggleButtonState = (formObject, inputList, buttonElement) => {
     // сделай кнопку неактивной
     buttonElement.classList.add(formObject.inactiveButtonClass);
     buttonElement.disabled = true;
-    
   } else {
         // иначе сделай кнопку активной
     buttonElement.classList.remove(formObject.inactiveButtonClass);
     buttonElement.disabled = false;
   }
+  openBtn.addEventListener('click', () => toggleButtonState(formObject, inputList, buttonElement)); //проверяем состояние кнопки для профиля при открытии поп-апа
+  openBtnAdd.addEventListener('click', () => toggleButtonState(formObject, inputList, buttonElement)); //проверяем состояние кнопки для карточки при открытии поп-апа
 };
 
 const checkInputValidity = (formObject, formElement, inputElement) => { 
@@ -83,7 +86,7 @@ const enableValidation = (formObject) => {
   });
 };
 
-enableValidation({
+  enableValidation({
     formSelector: '.popup__form', //контейнер поп-апа
     inputSelector: '.popup__input', //инпуты
     submitButtonSelector: '.popup__btn', //активная кнопка
@@ -92,4 +95,5 @@ enableValidation({
     errorClass: 'popup__error_visible' // информация об ошибке
   });
 
-  
+
+
