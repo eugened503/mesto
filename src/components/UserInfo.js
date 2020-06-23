@@ -1,21 +1,20 @@
 export default class UserInfo {
-  constructor(name, info) {
-    this.name = name;
-    this.info = info;
+  constructor({ title, subtitle }, author, job) {
+    this._nameSelector = document.querySelector(title);
+    this._jobSelector = document.querySelector(subtitle);
+    this._author = author;
+    this._job = job;  
   }
-
-  getUserInfo() { //возвращает объект с данными пользователя
-    const cardElement = document
-      .querySelector('.profile-info')
-      .querySelector('.information')
-    this._element = cardElement;
-    return cardElement; // вернём DOM-элемент профиля;
+  getUserInfo() { // возращает объект с данными пользователя
+    this._author.value = this._nameSelector.textContent;
+    this._job.value = this._jobSelector.textContent;
+    return {
+      name: this._author.value,
+      work: this._job.value
+    }
   }
-
-  setUserInfo() { // принимает новые данные пользователя и добавляет их на страницу
-    this.getUserInfo();
-    this._element.querySelector('.profile-info__title').textContent = this.name;
-    this._element.querySelector('.profile-info__subtitle').textContent = this.info;
-    return this._element;
+  setUserInfo(name, work) { // принимает новые данные пользователя и добавляет их на страницу
+    this._nameSelector.textContent = name;
+    this._jobSelector.textContent =  work;
   }
 }

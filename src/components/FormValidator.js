@@ -65,8 +65,18 @@ export default class FormValidator {
     });
   };
 
+ clearError(elem) { // функция удаляет ошибки перед открытием поп-апа и генерирует состояние кнопок
+    const bugInput = Array.from(elem.querySelectorAll('.popup__input'));
+    const buttonElement = elem.querySelector('.popup__btn');
+    elem.firstElementChild.reset();
+    bugInput.forEach((inputElement) => {
+      this._hideInputError(inputElement); //удаляем текст ошибок и нижнее подчеркивание
+    });
+    this._toggleButtonState(bugInput, buttonElement); //делаем кнопку активной/пассивной
+  }
+
   enableValidation = () => {
-    // Для каждой формы вызовем функцию setEventListeners,
+    // Для каждой формы вызовем функцию setEventListeners
     this._setEventListeners();
   };
 }
