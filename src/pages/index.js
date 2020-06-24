@@ -54,16 +54,19 @@ import './index.css';
 const initialValidatorProfile = new FormValidator(obj, containerProfile); //экземпляр для очистки полей профиля от ошибок
 
 function openProfileForm(evt) { //открываем форму редактирования профиля пользователя
-  initialValidatorProfile.clearError(formProfileElement);
- // console.log(formUser.getUserInfo());
-  formUser.getUserInfo();
-  formSubmitHandler.open();
   evt.preventDefault();
+  initialValidatorProfile.clearError(formProfileElement);
+  const autor = formUser.getUserInfo();
+  nameInput.value = autor.name;
+  jobInput.value = autor.work;
+  formSubmitHandler.open();
+ 
 }
+
 const formUser = new UserInfo({ //экземпляр для создания новой карточки пользователя
   title: '.profile-info__title',
   subtitle: '.profile-info__subtitle'
-}, nameInput, jobInput);
+});
 
 const formSubmitHandler = new PopupWithForm(formProfileElement, { // добавляем данные пользователя на страницу
   handleFormSubmit: (item) => {
