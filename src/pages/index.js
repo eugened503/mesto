@@ -1,9 +1,9 @@
-import Card from './components/Card.js';
-import FormValidator from './components/FormValidator.js';
-import PopupWithForm from './components/PopupWithForm.js';
-import UserInfo from './components/UserInfo.js';
-import Section from './components/Section.js';
-import PopupWithImage from './components/PopupWithImage.js';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
+import Section from '../components/Section.js';
+import PopupWithImage from '../components/PopupWithImage.js';
 const openBtnAdd = document.querySelector('.profile__add-button'); // кнопка вызова поп-апа (добавление карточки)
 const openBtn = document.querySelector('.profile-info__button'); //присвоение переменной элемента - кнопки редактирования формы (профиль пользователя)
 const containerProfile = document.querySelector('.popup__container');
