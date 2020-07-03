@@ -1,4 +1,5 @@
 @import url('./__btn/popup__btn.css');
+@import url('./__btn-avatar/popup__btn-avatar.css');
 @import url('./__close-button/popup__close-button.css');
 @import url('./__close-button-enlargement/popup__close-button-enlargement.css');
 @import url('./__container/popup__container.css');
@@ -9,6 +10,10 @@
 @import url('./__img-enlargement/popup__img-enlargement.css');
 @import url('./__error/popup__error.css');
 @import url('./__input/popup__input.css');
+@import url('./__deleting-card/popup__deleting-card.css');
+@import url('./__avatar-container/popup__avatar-container.css');
+@import url('./__btn-deleting-card/popup__btn-deleting-card.css');
+@import url('./__close-button-deleting-card/popup__close-button-deleting-card.css');
 
 .popup {
     width: 100%;

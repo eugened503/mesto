@@ -21,8 +21,6 @@ export default class PopupWithForm extends Popup {
 
   close() { //метод закрытия поп-апа
     super.close();
-    // this._popupSelector.firstElementChild.reset();
-    // this._popupSelector.querySelector('.popup__container').reset();
     this._popupSelector.removeEventListener('submit', this.clickCloseBtn);
   }
 
@@ -30,6 +28,6 @@ export default class PopupWithForm extends Popup {
     evt.preventDefault();
     this._handleFormSubmit(this._getInputValues());
     this.close();
-
   }
 }
+

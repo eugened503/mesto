@@ -1,29 +1,30 @@
-
-.card__like-button {
-    background-color: white;
-   /* background-color: transparent;*/
+.header__pencil {
     display: inline-block;
     width: 28px;
     height: 25px;
-    background-image: url(../../../images/like.svg);
+    background-image: url(../../../images/pencil.svg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     background-size: 20px 18px;
     border: 0;
-    grid-area: like-button;
-    justify-self: end;
-    align-self: center;
-    margin-right: 18px;
-    margin-bottom: 20px;
     cursor: pointer;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+    position: absolute;
+    left: 50px;
+    top: 100px;
+    background-color: transparent;
+    transition: .2s linear;
+    opacity: 0;
 }
 
-
-.card__like-button:hover {
+/*
+.header__pencil {
     opacity: .6;
   }
-  
-  
+ */
+
+ .header__pencil:hover {
+    opacity: 1;
+}
