@@ -90,5 +90,6 @@ export default class Card {
     this._element.querySelector('.card__like-button').removeEventListener('click', this.ListenerToggleLike);
     this._element.querySelector('.card__trash-button').removeEventListener('click', this.ListenerHandleDeleteCard);
   }
+
 }
 

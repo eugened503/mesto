@@ -1,22 +1,22 @@
-export default class API {
-  constructor({ baseUrl }) {
+export default class Api {
+  constructor({ baseUrl, authorization}) {
     this._baseUrl = baseUrl;
+    this._authorization = authorization;
   }
   
   _fetch(url, params) {
     params.headers = {
-      authorization: 'b6efac6e-fe72-4acc-8171-d974e56a542c',
+      authorization: this._authorization,
       'Content-Type': 'application/json'
     };
     return fetch(this._baseUrl + url, params)
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-      })
+    .then((res) => {
+      if(!res.ok) {
+        return Promise.reject(res.status);
+      } else {
+        return res.json();
+      }
+    })
   }
 
   //метод получения карточки с сервера

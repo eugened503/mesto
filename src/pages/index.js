@@ -1,12 +1,12 @@
+import './index.css'; 
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
-import API from '../components/api.js';
+import Api from '../components/api.js';
 import Popup from '../components/Popup.js';
-import { baseUrl } from '../components/baseUrl.js';
 const openBtnAdd = document.querySelector('.profile__add-button'); // кнопка вызова поп-апа (добавление карточки)
 const openBtn = document.querySelector('.profile-info__button'); //присвоение переменной элемента - кнопки редактирования формы (профиль пользователя)
 const containerProfile = document.querySelector('.popup__container');
@@ -32,9 +32,10 @@ const containerAvatar = document.querySelector('.popup__avatar-container'); //к
 const saveBtnProfile = document.querySelector('.popup__btn'); //кнопка сохранения в поп-апе редактирования профиля
 const saveBtnFoto = document.querySelector('.popup__btn-foto'); //кнопка сохранения в поп-апе редактирования карточки
 const saveBtnAvatar = document.querySelector('.popup__btn-avatar'); //кнопка сохранения в поп-апе добавления аватара
-const apiCards = new API({ baseUrl }); // экземпляр api c базовым url
+const baseUrl = 'https://mesto.nomoreparties.co/v1/cohort-12'; //базовый URL
+const authorization = 'b6efac6e-fe72-4acc-8171-d974e56a542c'; //мой идентификатор
 
-import './index.css'; 
+const apiCards = new Api({ baseUrl, authorization}); // экземпляр api
 
 const initialValidatorProfile = new FormValidator(obj, containerProfile); //экземпляр для очистки полей профиля от ошибок
 
@@ -53,10 +54,13 @@ const formUser = new UserInfo({ //экземпляр для создания н�
   subtitle: '.profile-info__subtitle'
 }, apiCards);
 
+
+const profilePopup = new Popup(formProfileElement);
+
 const formSubmitHandler = new PopupWithForm(formProfileElement, { // добавляем данные пользователя на страницу
   handleFormSubmit: (item) => {
     renderLoading(true, saveBtnProfile); //уведомление пользователя о процессе загрузки
-    formUser.setUserInfo(item);
+    formUser.setUserInfo(item, profilePopup);
   }
 });
 
@@ -91,6 +95,7 @@ function takesCards(item) {
               element.remove(); //удаление элемента 
               element = null;
               cardInit.removeEventListeners(); //удаление всех слушателей
+              popupClose.close(); //закрываем поп-апа после ответа от сервера
             })
             .catch((err) => {
               console.log(`ошибка: ${err}`)
@@ -105,14 +110,16 @@ function takesCards(item) {
   return cardElement;
 }
 
+
 //функция загрузки карточек с сервера
-const cardList = new Section({
+export const cardList = new Section({
   renderer: (item) => {
     cardList.addItem(takesCards(item)); //передаем функцию по созданию карточки
   }
 }, cardListSection);
 apiCards.getInitialCards('/cards').then((arr) => { //получение карточек с сервера и их отрисовка
   cardList.drawingArray(arr);
+
 })
 
 // функция добавления новых карточек
@@ -122,9 +129,12 @@ const form = new PopupWithForm(formElementFoto, {
     apiCards.sendCard('/cards', formData)
       .then((data) => {
         cardList.drawingArray([data]); //создает карточку
+        form.close(); //закрываем поп-апа после ответа от сервера
+        formElementFoto.querySelector('.popup__container-foto').reset(); //очистка полей формы
       })
       .catch((err) => {
         console.log(`ошибка: ${err}`)
+
       })
       .finally(() => {
         renderLoading(false, saveBtnFoto);
@@ -148,6 +158,8 @@ const formAvatar = new PopupWithForm(popupAvatar, { //обновляем инф�
     apiCards.changeAvatar('/users/me/avatar', formData)
       .then((data) => {
         document.querySelector('.profile__image').src = data.avatar;
+        formAvatar.close(); //закрываем поп-апа после ответа от сервера
+        popupAvatar.querySelector('.popup__avatar-container').reset(); //очистка полей формы
       })
       .catch((err) => {
         console.log(`ошибка: ${err}`);
@@ -171,7 +183,7 @@ const UserServer = new UserInfo({ //экземпляр новой карточк
   subtitle: '.profile-info__subtitle'
 }, apiCards)
 
-apiCards.getUserInfoServer('/users/me').then(data => UserServer.setUserInfo(data));
+apiCards.getUserInfoServer('/users/me').then(data => UserServer.setUserInfo(data, profilePopup));
 
 function renderLoading(isLoading, btn) { // функция по уведомлению пользователя о процессе загрузки
   if (isLoading) {

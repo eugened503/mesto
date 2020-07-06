@@ -12,11 +12,18 @@ export default class UserInfo {
     }
   }
   
-  setUserInfo(data) { // принимает новые данные пользователя и добавляет их на страницу
+  setUserInfo(item, popup) { // принимает новые данные пользователя и добавляет их на страницу
+  this._infoApi.sendUserInfo('/users/me', item) //отправляет новые данные пользователя на сервер
+  .then((data) => {
     this._nameSelector.textContent = data.name;
-    this._jobSelector.textContent =  data.about;
-    this._infoApi.sendUserInfo('/users/me', data); //отправляет новые данные пользователя на сервер
-  }
-
-
+    this._jobSelector.textContent = data.about;
+    popup.close(); //закрываем поп-апа после ответа от сервера
+  })
+  .catch((err) => {
+    console.log(`ошибка: ${err}`)
+  })
 }
+}
+
+
+

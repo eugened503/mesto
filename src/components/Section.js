@@ -5,9 +5,8 @@ export default class Section {
   }
 
   drawingArray(array) {
-    array.forEach((item) => {
-      this._renderer(item);
-    });
+    array.reverse();
+    array.forEach(item => this._renderer(item));
   }
 
   addItem(element) {
@@ -15,3 +14,4 @@ export default class Section {
   }
 
 }
+
