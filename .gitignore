@@ -1,2 +1,10 @@
 node_modules
-dist
+src
+.babelrc
+babel.config.js
+package-lock.json
+package.json
+postcss.config.js
+postcss.config.js
+README.md
+webpack.config.js
